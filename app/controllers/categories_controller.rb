@@ -5,15 +5,16 @@ class CategoriesController < ApplicationController
     @category = Category.new
   end
   
-  def new
-    @category = Category.new
-  end
-  
   def create
     @category = Category.new(category_params)
-    @category.save
-    flash.notice = "Category '#{@category.name}' successfully created!"
-    redirect_to categories_path
+    
+    respond_to do |format|
+      if @category.save
+        format.html { redirect_to categories_path, notice: "Category '#{@category.name}' successfully created!" }
+      else
+        format.html { redirect_to categories_path, notice: "Category have to have name." }
+      end
+    end
   end
   
   def destroy
@@ -33,9 +34,14 @@ class CategoriesController < ApplicationController
   
   def update
     @category = Category.find(params[:id])
-    @category.update(category_params)
-    flash.notice = "Category '#{@category.name}' Updated!"
-    redirect_to categories_path
+    
+    respond_to do |format|
+      if @category.update(category_params)
+        format.html { redirect_to categories_path, notice: "Category '#{@category.name}' Updated!" }
+      else
+        format.html { render :edit }
+      end
+    end
   end
   
   def show

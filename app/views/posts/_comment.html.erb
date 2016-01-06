@@ -1,0 +1,6 @@
+<div>
+  <h4>Commented by <%= comment.name %></h4> 
+  <%= link_to "edit", edit_post_comment_path(comment.post_id, comment) %>
+  <%= link_to "del", post_comment_path(comment.post_id, comment), method: :delete, data: {confirm: "Are you sure?"}%>
+  <p><%= comment.body %></p>
+<div>

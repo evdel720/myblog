@@ -11,13 +11,22 @@ class PostsController < ApplicationController
   
   def create
     @post = Post.new(post_params)
-    @post.save
-    flash.notice = "Post '#{@post.title}' successfully created!"
-    redirect_to posts_path
+    respond_to do |format|
+      if @post.save
+        format.html { redirect_to posts_path, notice: "Post '#{@post.title}' was successfully created." }
+      else
+        format.html { render :new }
+      end
+    end
   end
   
   def destroy
     @post = Post.find(params[:id])
+    
+    Comment.all.each do |comment|
+      comment.destroy if comment.post_id == @post.id
+    end
+    
     @post.destroy
     flash.notice = "Post '#{@post.title}' deleted!"
     redirect_to posts_path
@@ -29,12 +38,19 @@ class PostsController < ApplicationController
   
   def update
     @post = Post.find(params[:id])
-    @post.update(post_params)
-    flash.notice = "Post '#{@post.title}' Updated!"
-    redirect_to posts_path
+    
+    respond_to do |format|
+      if @post.update(post_params)
+        format.html { redirect_to posts_path, notice: "Post '#{@post.title}' Updated!" }
+      else
+        format.html { render :edit }
+      end
+    end
   end
   
   def show
     @post = Post.find(params[:id])
+    @comment = Comment.new
+    @comment.post_id = @post.id
   end
 end

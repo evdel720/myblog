@@ -5,7 +5,7 @@
     <li>
       <%= link_to category.name, category_path(category) %>
       <%= link_to "Edit", edit_category_path(category) %>
-      <%= link_to "Del", category_path(category), method: :delete, data: {confirm: "Are you sure?"}  %>
+      <%= link_to "Del", category_path(category), method: :delete, data: {confirm: "If you delete the category, all of the posts in this category will be deleted too. Are you sure?"}  %>
       
     </li>
   <% end %>

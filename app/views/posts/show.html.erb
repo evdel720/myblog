@@ -1,11 +1,20 @@
 <h1><%= @post.title %></h1>
 
 <p><%= @post.body %></p>
+<p>Category : <%= link_to @post.category.name, category_path(@post.category) %></p>
+<br>
 
-<% if @post.category %>
-  <p>Category : <%= link_to @post.category.name, category_path(@post.category) %></p>
+<h3>Comments</h3>
+<% if @post.comments %>
+  <%= render partial: 'posts/comment', collection: @post.comments %>
 <% end %>
 
+<h3>Post a Comment</h3>
+<%= render partial: 'comments/form' %>
+
+
+<br>
+<br>
 <%= link_to "Back", posts_path %><br>
 <%= link_to "Edit", edit_post_path(@post) %><br>
 <%= link_to "delete", post_path(@post), method: :delete, data: {confirm: "Are you sure?"} %>

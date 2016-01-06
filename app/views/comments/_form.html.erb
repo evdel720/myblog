@@ -1,0 +1,16 @@
+
+<%= form_for [ @post, @comment ] do |f| %>
+  <p>
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+    <%= f.label :password %>
+    <%= f.text_field :password %>
+  </p>
+  <p>
+    <%= f.label :body, "Comment" %>
+    <%= f.text_area :body %>
+  </p>
+  <p>
+    <%= f.submit 'Submit' %>
+  </p>
+<% end %>
