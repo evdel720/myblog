@@ -1,0 +1,19 @@
+<h1>Edit post</h1>
+
+<%= form_for(@category) do |f| %>
+  <ul>
+  <% @category.errors.full_messages.each do |error| %>
+    <li><%= error %></li>
+  <% end %>
+  </ul>
+  
+  <p>
+    <%= f.label :name, "Edit category" %><br />
+    <%= f.text_field :name %>
+  </p>
+  
+  <p>
+    <%= f.submit %>
+  </p>
+<% end %>
+<%= link_to "Back", categories_path %>
