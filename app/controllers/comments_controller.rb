@@ -1,5 +1,4 @@
 class CommentsController < ApplicationController
-  before_action :check_password, only: [:edit, :update, :destroy]
   
   def create
     @comment = Comment.new(comment_params)
@@ -41,9 +40,7 @@ class CommentsController < ApplicationController
   end
   
   def comment_params
-    params.require(:comment).permit(:name, :body, :password)
+    params.require(:comment).permit(:body)
   end
   
-  def check_password
-  end
 end

@@ -21,9 +21,7 @@ ActiveRecord::Schema.define(version: 20160106020951) do
   end
 
   create_table "comments", force: :cascade do |t|
-    t.string   "name"
     t.text     "body"
-    t.string   "password"
     t.integer  "post_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
