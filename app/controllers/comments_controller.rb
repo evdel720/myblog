@@ -1,4 +1,5 @@
 class CommentsController < ApplicationController
+  skip_before_action :authorize_author
   
   def create
     @comment = Comment.new(comment_params)

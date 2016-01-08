@@ -1,5 +1,8 @@
 class CategoriesController < ApplicationController
   include CategoriesHelper
+  skip_before_action :authorize
+  skip_before_action :authorize_author, only: [:index, :show]
+  
   def index
     @categories = Category.all
     @category = Category.new
