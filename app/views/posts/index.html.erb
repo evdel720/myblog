@@ -1,7 +1,5 @@
 <h1>All posts</h1>
-<% if flash[:alert] %>
-  <p id="notice"><%= flash[:alert] %></p>
-<% end %>
+
 <ul id="posts">
   <% @posts.each do |post| %>
     <li>
@@ -11,9 +9,7 @@
   <% end %>
 </ul>
 
-<p><%= session[:user_id] %> </p>
 
-<p><%= session[:author_id] %> </p>
-
-<%= link_to "create new post", new_post_path %>
-<%= button_to 'Logout', logout_path, method: :delete %>
+<% if session[:author_id] %>
+  <%= link_to "create new post", new_post_path %>
+<% end %>

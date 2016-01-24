@@ -6,9 +6,39 @@
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
-<body>
-  <p class="flash"><%= flash.notice %></p>
-  <%= yield %>
-
+<body>  
+  <div id="banner">
+    <%= image_tag("logo.png") %>
+  </div>
+  
+  <div id="login_system">
+    <% if session[:user_id] || session[:author_id] %>
+      <% if session[:user_id] %>
+        <p>Logged in as user, <b><%= User.find_by_id(session[:user_id]).name %></b> </p>
+      <% else %>
+        <p>Logged in as author, <b><%= Author.find_by_id(session[:author_id]).author %></b> </p>
+      <% end %>
+      <%= button_to 'Logout', logout_path, method: :delete %>
+    <% else %>
+      <%= button_to 'Login', login_path %>
+    <% end %>
+    <br>
+  </div>
+  
+  <div id="columns">
+    <div id="side">
+      <h4>Categories</h4>
+      <ul id="categories">
+        <% Category.all.sort.each do |category| %>
+          <li><%= link_to category.name, category_path(category) %></li>
+        <% end %>
+      </ul>
+	</div>
+    
+	<div id="main">
+	  <%= yield %>
+	</div>
+    
+  </div>
 </body>
 </html>

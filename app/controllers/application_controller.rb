@@ -8,13 +8,13 @@ class ApplicationController < ActionController::Base
   protected
     def authorize
       if session[:user_id] == nil and session[:author_id] == nil
-        redirect_to login_path, notice: "Please log in"
+        redirect_to login_path, alert: "Please log in"
       end
     end
     
     def authorize_author
       if session[:author_id] == nil
-        redirect_to login_path, notice: "Please log in as author for this"
+        redirect_to login_path, alert: "Please log in as author for this"
       end
     end
 end

@@ -9,5 +9,7 @@
   <%= render partial: 'posts/comment', collection: @post.comments %>
 <% end %>
 <br>
-<h3>Post a Comment</h3>
-<%= render partial: 'comments/form' %>
+<% if session[:user_id] || session[:author_id] %>
+  <h3>Post a Comment</h3>
+  <%= render partial: 'comments/form' %>
+<% end %>

@@ -2,8 +2,6 @@ class SessionsController < ApplicationController
   skip_before_action :authorize
   skip_before_action :authorize_author
   
-  
-  
   def new
   end
 
@@ -12,18 +10,22 @@ class SessionsController < ApplicationController
     author = Author.find_by(author: params[:name])
     if user && user.authenticate(params[:password])
       session[:user_id] = user.id
-      redirect_to posts_path, alert: "login as user"
+      redirect_to posts_path
     elsif author && author.authenticate(params[:password])
       session[:author_id] = author.id
-      redirect_to posts_path, alert: "login as author"
+      redirect_to posts_path
     else
-      redirect_to login_path, alert: "Invalid id and password"
+      if !user && !author
+        redirect_to login_path
+      else
+        redirect_to login_path, alert: "Invalid id and password"
+      end
     end
   end
 
   def destroy
     session[:user_id] = nil
     session[:author_id] = nil
-    redirect_to posts_path, notice: "Logged out"
+    redirect_to posts_path
   end
 end

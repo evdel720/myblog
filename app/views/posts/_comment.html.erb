@@ -1,4 +1,5 @@
 <div>
   <h4>Commented by <%= link_to "edit", edit_post_comment_path(comment.post_id, comment) %>  <%= link_to "del", post_comment_path(comment.post_id, comment), method: :delete, data: {confirm: "Are you sure?"}%></h4> 
   <p><%= comment.body %></p>
+  <p><%= @commentor %></p>
 <div>

@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  get 'blog/index'
+
+  root to: 'posts#index'
+  
   controller :sessions do
     get 'login' => :new
 	post 'login' => :create
