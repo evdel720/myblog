@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-  get 'blog/index'
-
   root to: 'posts#index'
   
   controller :sessions do

@@ -46,9 +46,6 @@ ActiveRecord::Schema.define(version: 20160107105904) do
     t.datetime "updated_at"
   end
 
-  add_index "posts", ["category_id"], name: "index_posts_on_category_id"
-  add_index "posts", ["comment_id"], name: "index_posts_on_comment_id"
-
   create_table "users", force: :cascade do |t|
     t.string   "name"
     t.string   "password_digest"
