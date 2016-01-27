@@ -28,6 +28,7 @@
   
   <div id="columns">
     <div id="side">
+      <%= button_to 'Home', posts_path, method: :get %>
       <h4>Categories</h4>
       <ul id="categories">
         <% Category.all.sort.each do |category| %>

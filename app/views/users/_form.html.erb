@@ -22,6 +22,17 @@
   <div class="field">
     <%= f.label :password_confirmation %><br>
     <%= f.password_field :password_confirmation %>
+  </div>  
+  <div class="field">
+    <%= f.label :email %><br>
+    <%= f.text_field :email %>
+  </div>  
+  <div class="field">
+    <%= f.label :follow, "Would you like to follow this blog?"%><br>
+    <%= f.radio_button :follow, true %>
+    <%= f.label :yes %>
+    <%= f.radio_button :follow, false %>
+    <%= f.label :no %>
   </div>
   <div class="actions">
     <%= f.submit "Join" %>

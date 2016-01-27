@@ -55,4 +55,5 @@ class PostsController < ApplicationController
     @comment = Comment.new
     @comment.post_id = @post.id
   end
+  
 end
