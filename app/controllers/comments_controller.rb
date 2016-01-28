@@ -1,10 +1,14 @@
 class CommentsController < ApplicationController
   skip_before_action :authorize_author
-  
+
   def create
     @comment = Comment.new(comment_params)
     @comment.post_id = params[:post_id]
-  
+    if session[:author_id]
+      @comment.commentor = Author.find_by(session[:author_id]).author
+    else
+      @comment.commentor = User.find_by(session[:user_id]).name
+    end
     respond_to do |format|
       if @comment.save
         format.html { redirect_to post_path(@comment.post), notice: "Your comment is successfully saved!" }
@@ -13,16 +17,16 @@ class CommentsController < ApplicationController
       end
     end
   end
-  
+
   def edit
     @post = Post.find(params[:post_id])
     @comment = Comment.find(params[:id])
   end
-  
+
   def update
     @post = Post.find(params[:post_id])
     @comment = Comment.find(params[:id])
-    
+
     respond_to do |format|
       if @comment.update(comment_params)
         format.html { redirect_to post_path(@comment.post_id), notice: "Your comment is Updated!" }
@@ -31,7 +35,7 @@ class CommentsController < ApplicationController
       end
     end
   end
-  
+
   def destroy
     @post = Post.find(params[:post_id])
     @comment = Comment.find(params[:id])
@@ -39,9 +43,9 @@ class CommentsController < ApplicationController
     flash.notice = "Your comment is deleted!"
     redirect_to post_path(@post)
   end
-  
+
   def comment_params
     params.require(:comment).permit(:body)
   end
-  
+
 end

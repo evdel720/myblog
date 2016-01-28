@@ -1,5 +1,13 @@
 <div>
-  <h4>Commented by <%= link_to "edit", edit_post_comment_path(comment.post_id, comment) %>  <%= link_to "del", post_comment_path(comment.post_id, comment), method: :delete, data: {confirm: "Are you sure?"}%></h4> 
+  <h4>Commented by <i><%= comment.commentor %></i>, <%= date_format(comment.updated_at) %></h4>
   <p><%= comment.body %></p>
-  <p><%= @commentor %></p>
+    <% if session[:user_id] && User.find_by_name(comment.commentor) && User.find_by_name(comment.commentor).id == session[:user_id] %>
+      <%= link_to "edit", edit_post_comment_path(comment.post_id, comment) %>  <%= link_to "del", post_comment_path(comment.post_id, comment), method: :delete, data: {confirm: "Are you sure?"}%>
+    <% end %>
+    <% if session[:author_id] %>
+      <% if Author.find_by_author(comment.commentor) && Author.find_by_author(comment.commentor).id == session[:author_id] %>
+        <%= link_to "edit", edit_post_comment_path(comment.post_id, comment) %>
+      <% end %>
+      <%= link_to "del", post_comment_path(comment.post_id, comment), method: :delete, data: {confirm: "Are you sure?"}%>
+    <% end %>
 <div>

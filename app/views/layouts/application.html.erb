@@ -6,11 +6,15 @@
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
-<body>  
+<body>
   <div id="banner">
     <%= image_tag("logo.png") %>
   </div>
-  
+
+  <% if flash[:notice] %>
+    <div><%= flash[:notice] %> </div>
+  <% end %>
+
   <div id="login_system">
     <% if session[:user_id] || session[:author_id] %>
       <% if session[:user_id] %>
@@ -25,7 +29,7 @@
     <% end %>
     <br>
   </div>
-  
+
   <div id="columns">
     <div id="side">
       <%= button_to 'Home', posts_path, method: :get %>
@@ -39,11 +43,11 @@
         <%= button_to 'manage category', categories_path, method: :get %>
       <% end %>
 	</div>
-    
+
 	<div id="main">
 	  <%= yield %>
 	</div>
-    
+
   </div>
 </body>
 </html>

@@ -1,8 +1,9 @@
 class SessionsController < ApplicationController
   skip_before_action :authorize
   skip_before_action :authorize_author
-  
+
   def new
+    redirect_to posts_path, notice: "Please logout first" if session[:user_id] || session[:author_id]
   end
 
   def create
