@@ -12,6 +12,19 @@ class AuthorsController < ApplicationController
   def show
   end
 
+
+  def verify_new
+  end
+
+  def verify
+    @author = Author.find_by_id(session[:author_id])
+    if @author.authenticate(params[:password])
+      redirect_to edit_author_path(session[:author_id])
+    else
+      redirect_to author_verify_path(session[:author_id]), notice: "Check your password"
+    end
+  end
+
   # GET /authors/new
   def new
     @author = Author.new

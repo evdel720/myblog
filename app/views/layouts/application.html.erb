@@ -17,12 +17,17 @@
 
   <div id="login_system">
     <% if session[:user_id] || session[:author_id] %>
-      <% if session[:user_id] %>
+      <% if session[:user_id] && User.find_by_id(session[:user_id]) %>
         <p>Logged in as user, <b><%= User.find_by_id(session[:user_id]).name %></b> </p>
-      <% else %>
+        <%= button_to 'Edit your info', user_verify_path(session[:user_id]), method: :get %>
+        <%= button_to 'Withdraw', user_verify_path(session[:user_id]), method: :get %>
+
+      <% elsif session[:author_id] && Author.find_by_id(session[:author_id])%>
         <p>Logged in as author, <b><%= Author.find_by_id(session[:author_id]).author %></b> </p>
+        <%= button_to 'Edit author', authors_path, method: :get %>
       <% end %>
       <%= button_to 'Logout', logout_path, method: :delete %>
+
     <% else %>
       <%= button_to 'Login', login_path %>
       <%= button_to 'Join', new_user_path, method: :get %>

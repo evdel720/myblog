@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   skip_before_action :authorize, only: [:new, :create]
-  skip_before_action :authorize_author, only: [:new, :create]
+  skip_before_action :authorize_author, only: [:new, :create, :edit, :update, :verify, :verify_new, :destroy]
 
   # GET /users
   # GET /users.json
@@ -22,6 +22,19 @@ class UsersController < ApplicationController
   # GET /users/1/edit
   def edit
   end
+
+  def verify_new
+  end
+
+  def verify
+    @user = User.find_by_id(session[:user_id])
+    if @user.authenticate(params[:password])
+      redirect_to edit_user_path(session[:user_id])
+    else
+      redirect_to user_verify_path(session[:user_id]), notice: "Check your password"
+    end
+  end
+
 
   # POST /users
   # POST /users.json
@@ -57,8 +70,9 @@ class UsersController < ApplicationController
   # DELETE /users/1.json
   def destroy
     @user.destroy
+    session[:user_id] = nil
     respond_to do |format|
-      format.html { redirect_to users_url, notice: "#{@user.name} just removed from my blog. Thanks." }
+      format.html { redirect_to posts_path, notice: "Id #{@user.name} just removed from my blog. Thanks." }
       format.json { head :no_content }
     end
   end
