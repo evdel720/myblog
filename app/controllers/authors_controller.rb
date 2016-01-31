@@ -1,5 +1,8 @@
 class AuthorsController < ApplicationController
   before_action :set_author, only: [:show, :edit, :update, :destroy]
+  skip_before_action :only_one_author, only: [:new, :create]
+  skip_before_action :authorize_author, only: [:new, :create]
+  skip_before_action :authorize, only: [:new, :create]
 
   # GET /authors
   # GET /authors.json
@@ -21,12 +24,15 @@ class AuthorsController < ApplicationController
     if @author.authenticate(params[:password])
       redirect_to edit_author_path(session[:author_id])
     else
-      redirect_to author_verify_path(session[:author_id]), notice: "Check your password"
+      redirect_to author_verify_path(session[:author_id]), alert: "Check your password"
     end
   end
 
   # GET /authors/new
   def new
+    if Author.all.size >= 1
+      redirect_to posts_path, alert: "There's already one author. You can't make more than 1."
+    end
     @author = Author.new
   end
 

@@ -1,6 +1,5 @@
-<p id="notice"><%= notice %></p>
 
-<h1>Listing Authors</h1>
+<h1>Manage author information</h1>
 
 <table>
   <thead>
@@ -17,12 +16,9 @@
         <td><%= author.author %></td>
         <td><%= author.email %></td>
         <td><%= link_to 'Edit', author_verify_path(author) %></td>
-        <td><%= link_to 'Destroy', author, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
 <br>
-
-<%= link_to 'New Author', new_author_path %>
