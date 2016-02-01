@@ -4,7 +4,11 @@ class PostsController < ApplicationController
   skip_before_action :authorize_author, only: [:index, :show]
 
   def index
-    @posts = Post.all
+    if params[:search]
+      @posts = Post.search(params[:search]).order("created_at DESC")
+    else
+      @posts = Post.all.sort{|x, y| y <=> x}
+    end
   end
 
   def new

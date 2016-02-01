@@ -5,9 +5,9 @@ class CommentsController < ApplicationController
     @comment = Comment.new(comment_params)
     @comment.post_id = params[:post_id]
     if session[:author_id]
-      @comment.commentor = Author.find_by(session[:author_id]).author
+      @comment.commentor = Author.find(session[:author_id]).author
     else
-      @comment.commentor = User.find_by(session[:user_id]).name
+      @comment.commentor = User.find(session[:user_id]).name
     end
     respond_to do |format|
       if @comment.save

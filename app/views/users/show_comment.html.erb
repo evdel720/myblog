@@ -1,0 +1,9 @@
+<h1>Your comments</h1>
+
+<% @comments.each do |comment| %>
+  <h4>Commented at <i><%= Post.find(comment.post_id).title %></i>, <%= date_format(comment.updated_at) %></h4>
+  <p><%= comment.body %></p>
+    <% if session[:user_id] && comment.commentor == User.find(session[:user_id]).name %>
+      <%= link_to "edit", edit_post_comment_path(comment.post_id, comment) %>  <%= link_to "del", post_comment_path(comment.post_id, comment), method: :delete, data: {confirm: "Are you sure?"}%>
+    <% end %>
+<% end %>

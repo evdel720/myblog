@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   skip_before_action :authorize, only: [:new, :create]
-  skip_before_action :authorize_author, only: [:new, :create, :edit, :update, :verify, :verify_new, :destroy]
+  skip_before_action :authorize_author, only: [:new, :create, :edit, :update, :verify, :verify_new, :destroy, :show_comment]
 
   # GET /users
   # GET /users.json
@@ -21,6 +21,11 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
+  end
+
+  def show_comment
+    @user = User.find(session[:user_id])
+    @comments = Comment.where(:commentor => @user.name).sort{|x, y| y <=> x}
   end
 
   def verify_new
@@ -69,10 +74,14 @@ class UsersController < ApplicationController
   # DELETE /users/1
   # DELETE /users/1.json
   def destroy
+    @comments = Comment.where(:commentor => @user.name)
+    @comments.each do |comment|
+      comment.destroy
+    end
     @user.destroy
     session[:user_id] = nil
     respond_to do |format|
-      format.html { redirect_to posts_path, notice: "Id #{@user.name} just removed from my blog. Thanks." }
+      format.html { redirect_to posts_path, alert: "Id #{@user.name} just removed from my blog. Thanks." }
       format.json { head :no_content }
     end
   end

@@ -14,23 +14,24 @@
 
   <div id="columns">
     <div id="side">
-      <%= button_to 'Home', posts_path, method: :get %>
+      <%= button_to 'Home', posts_path, method: :get, :id => 'buttons' %>
       <div id="login_system">
         <% if session[:user_id] || session[:author_id] %>
           <% if session[:user_id] && User.find_by_id(session[:user_id]) %>
             <p>Logged in as user, <b><%= User.find_by_id(session[:user_id]).name %></b> </p>
-            <%= button_to 'Edit your info', user_verify_path(session[:user_id]), method: :get %>
-            <%= button_to 'Withdraw', user_verify_path(session[:user_id]), method: :get %>
-
+            <%= button_to 'Edit your info', user_verify_path(session[:user_id]), method: :get, :id => 'buttons' %>
+            <%= button_to 'Withdraw', user_verify_path(session[:user_id]), method: :get, :id => 'buttons' %>
+            <%= button_to 'My comments', user_comment_path(session[:user_id]), method: :get, :id => 'buttons' %>
           <% elsif session[:author_id] && Author.find_by_id(session[:author_id])%>
             <p>Logged in as author, <b><%= Author.find_by_id(session[:author_id]).author %></b> </p>
-            <%= button_to 'Edit author', authors_path, method: :get %>
+            <%= button_to 'Edit author', authors_path, method: :get, :id => 'buttons' %>
           <% end %>
-          <%= button_to 'Logout', logout_path, method: :delete %>
+          <br>
+          <%= button_to 'Logout', logout_path, method: :delete, :id => 'buttons' %>
 
         <% else %>
-          <%= button_to 'Login', login_path %>
-          <%= button_to 'Join', new_user_path, method: :get %>
+          <%= button_to 'Login', login_path, :id => 'buttons' %>
+          <%= button_to 'Join', new_user_path, method: :get, :id => 'buttons' %>
         <% end %>
         <br>
       </div>
@@ -42,10 +43,20 @@
         <% end %>
       </ul>
       <% if session[:author_id] %>
-        <%= button_to 'make a new post', new_post_path, method: :get %>
-        <%= button_to 'manage users', users_path, method: :get %>
-        <%= button_to 'manage category', categories_path, method: :get %>
+        <%= button_to 'New post', new_post_path, method: :get, :id => 'buttons' %>
+        <%= button_to 'Users', users_path, method: :get, :id => 'buttons' %>
+        <%= button_to 'Categories', categories_path, method: :get, :id => 'buttons' %>
+        <br>
       <% end %>
+
+    <div id="search">
+      <%= form_tag(posts_path, :method => "get") do %>
+      <div>
+        <%= text_field_tag :search, params[:search], placeholder: "Search with title" %>
+        <button type="submit"></button>
+      </div>
+      <% end %>
+    </div>
 
 	</div>
 

@@ -13,6 +13,7 @@
  *= require_tree .
  *= require_self
  */
+
 #banner {
   background: #FDAFC9;
   padding: 10px;
@@ -23,11 +24,16 @@
 }
 
 #columns {
+  text-align: center;
+  #buttons {
+    width: 8em;
+    text-align: center;
+  }
 
   #side {
     float: left;
     padding: 1em;
-    width: 13em;
+    width: 12em;
     background: #6B8A24;
 
     ul {
@@ -44,6 +50,7 @@
   }
 
   #main {
+    text-align: left;
     margin-left: 17em;
     padding: 1em;
     background: white;
@@ -56,6 +63,6 @@
       background-color: #f0f0f0;
       font: bold smaller sans-serif;
     }
-    
+
   }
 }

@@ -11,10 +11,11 @@ Rails.application.routes.draw do
     get "verify" => :verify_new
     post "verify" => :verify
   end
-  
+
   resources :users do
     get "verify" => :verify_new
     post "verify" => :verify
+    get "comment" => :show_comment
   end
 
   resources :posts do
